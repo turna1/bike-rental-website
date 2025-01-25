@@ -37,5 +37,21 @@ function loadSection(section) {
 
 // Get Quote button interaction
 document.getElementById("getQuoteBtn").addEventListener("click", () => {
-  alert("Get your quote today by visiting our booking section!");
+  displayConfirmation("Your quote request has been received! Check the 'Book' section for more details.");
 });
+
+// Function to display confirmation message
+function displayConfirmation(message) {
+  const confirmationDiv = document.createElement("div");
+  confirmationDiv.classList.add("alert", "alert-success", "mt-3"); // Bootstrap alert styling
+  confirmationDiv.textContent = message;
+
+  // Insert the confirmation message below the button
+  const heroSection = document.querySelector(".hero-section");
+  heroSection.appendChild(confirmationDiv);
+
+  // Remove the confirmation message after 5 seconds
+  setTimeout(() => {
+    confirmationDiv.remove();
+  }, 5000);
+}
