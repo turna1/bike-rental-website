@@ -26,13 +26,62 @@ function loadSection(section) {
       content = "<h2>Our Location</h2><p>We are located at the heart of the city, ready to serve you!</p>";
       break;
     case "book":
-      content = "<h2>Book Your Ride</h2><p>Fill out the form below to book your adventure!</p>";
+      content = `
+        <h2>Book Your Ride</h2>
+        <p>Fill out the form below to book your adventure!</p>
+        <form id="bookingForm" class="mt-4">
+          <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+          </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Pick a Date</label>
+            <input type="date" class="form-control" id="date" required>
+          </div>
+          <div class="mb-3">
+            <label for="bikeType" class="form-label">Bike Type</label>
+            <select class="form-select" id="bikeType">
+              <option value="mountain">Mountain Bike</option>
+              <option value="road">Road Bike</option>
+              <option value="electric">Electric Bike</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <div id="formConfirmation" class="mt-3"></div>
+      `;
       break;
     default:
       content = "<h2>Welcome!</h2><p>Select an option from the menu.</p>";
   }
   contentContainer.innerHTML = `<div class="section-content">${content}</div>`;
-  contentContainer.style.display = "block"; // Show the content container
+  contentContainer.style.display = "block";
+
+  // Add form submission event listener for "Book" section
+  if (section === "book") {
+    const bookingForm = document.getElementById("bookingForm");
+    bookingForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      displayFormConfirmation();
+    });
+  }
+}
+
+// Display confirmation message after form submission
+function displayFormConfirmation() {
+  const confirmationDiv = document.getElementById("formConfirmation");
+  confirmationDiv.innerHTML = `
+    <div class="alert alert-success">
+      Your booking request has been submitted! We will contact you soon.
+    </div>
+  `;
+  setTimeout(() => {
+    confirmationDiv.innerHTML = ""; // Clear the confirmation after 5 seconds
+  }, 5000);
 }
 
 // Get Quote button interaction
